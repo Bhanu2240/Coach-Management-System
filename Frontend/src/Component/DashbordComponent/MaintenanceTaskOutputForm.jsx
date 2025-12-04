@@ -36,6 +36,19 @@ return (
                 >
                   {task.priority}
                 </span>
+                                <span
+                  className={`px-3 py-1 text-sm font-medium rounded-lg ${
+                    task.priority === "High"
+                      ? "bg-red-100 text-red-600"
+                      : task.priority === "Medium"
+                      ? "bg-blue-100 text-blue-600"
+                      : task.priority === "Critical"
+                      ? "bg-purple-100 text-purple-700"
+                      : "bg-yellow-100 text-yellow-700"
+                  }`}
+                >
+                  {task.department}
+                </span>
 
                 <span className="text-gray-500 text-sm">
                   {new Date().toLocaleDateString()}

@@ -71,6 +71,15 @@ const NavBar = ({ isloggin, setIsloggin }) => {
                                         Coach Profile
                                     </button>
                                 </Link>
+
+                                <Link to="/departments">
+                                    <button className={`px-3 py-2 rounded-lg text-sm transition ${location.pathname === "/departments"
+                                        ? "bg-blue-600 text-white"
+                                        : "text-gray-300 hover:text-white hover:bg-gray-700"
+                                        }`}>
+                                        departments Profile
+                                    </button>
+                                </Link>
                             </>
                         )}
                     </li>

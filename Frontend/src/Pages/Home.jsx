@@ -21,12 +21,14 @@ const Home = ({
   ActiveCoach,
   MaintenanceDueCoach,
   OutOfSericeCoach,
+
 }) => {
   const CountCoach = [
     { name: "Active", value: ActiveCoach },
     { name: "Maintenance Due", value: MaintenanceDueCoach },
     { name: "Out of Service", value: OutOfSericeCoach },
   ];
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#334155] p-8 text-white">

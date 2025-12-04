@@ -8,14 +8,16 @@ import NavBar from "./Component/NavBar"
 import MaintenanceTask from "./Component/DashbordComponent/MaintenanceTask"
 import { useEffect, useState } from "react"
 import LandingPage from "./Pages/LandingPage"
+import CoachDetailsPage from "./Pages/CoachDetailsPage"
+import DepartmentDashboard from "./Pages/DepartmentDashboard"
 
 function App() {
 
-//!_______________________________This is the Login_____________________________________
+  //!_______________________________This is the Login_____________________________________
   const [isloggin, setIsloggin] = useState(false)
 
 
-//!________________________________This is the Coach Profile_________________________________
+  //!________________________________This is the Coach Profile_________________________________
   const [AddCoach, setAddCoach] = useState([]);
   function AddCoachData(coachData) {
     setAddCoach((pre) => [...pre, coachData])
@@ -48,25 +50,41 @@ function App() {
   }, [AddCoach]);
 
 
-//!_______________________________________This is the Maintenance Task_____________________________
+  //!_______________________________________This is the Maintenance Task_____________________________
 
-const [AddMaintenace , setAddMaintenace] = useState([]);
+  const [AddMaintenace, setAddMaintenace] = useState([]);
   function AddMaintenaceData(MaintenanceData) {
-    setAddMaintenace((pre) =>[...pre , MaintenanceData])
+    setAddMaintenace((pre) => [...pre, MaintenanceData])
   }
+
+
+  //!_______________________________________Coach updata____________________________________________
+  function UpdateCoachData(id, updatedData) {
+  setAddCoach((prev) => {
+    const newArr = [...prev];
+    newArr[id] = updatedData;
+    return newArr;
+  });
+}
+
 
   return (
     <div>
       <NavBar isloggin={isloggin} setIsloggin={setIsloggin} />
 
       <Routes>
-        <Route path="/" element={<LandingPage/>} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<Home TotalCoach={TotalCoach} ActiveCoach={ActiveCoach} MaintenanceDueCoach={MaintenanceDueCoach} OutOfSericeCoach={OutOfSericeCoach} />} />
-        <Route path="/maintenance" element={<MaintenanceTask AddMaintenaceData={AddMaintenaceData} AddMaintenace={AddMaintenace}/>} />
+        <Route path="/maintenance" element={<MaintenanceTask AddMaintenaceData={AddMaintenaceData} AddMaintenace={AddMaintenace} />} />
         <Route path="/login" element={<Login setIsloggin={setIsloggin} />} />
         <Route path="/singup" element={<Singup setIsloggin={setIsloggin} />} />
         <Route path="/coachprofile" element={<Dashbord AddCoachData={AddCoachData} AddCoach={AddCoach} CountCoachData={CountCoachData} />} />
+        <Route path="/coach/:id" element={<CoachDetailsPage AddCoach={AddCoach} UpdateCoachData={UpdateCoachData} />}/>
+        <Route path="/departments" element={<DepartmentDashboard AddMaintenance={AddMaintenace} />} 
+/>
       </Routes>
+
+
 
 
     </div>
