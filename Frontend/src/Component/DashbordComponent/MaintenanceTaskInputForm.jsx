@@ -2,12 +2,13 @@
 
 import React, { useRef, useState } from "react";
 import coachListData from "../../DataFile/CoachListData";
-const MaintenanceTaskInputForm = ({AddMaintenaceData}) => {
+const MaintenanceTaskInputForm = ({ AddMaintenaceData }) => {
     const [showForm, setShowForm] = useState(false);
 
     let coach = useRef();
     let title = useRef();
     let priority = useRef();
+    let department = useRef();
     let description = useRef();
 
     function submitHandler(e) {
@@ -16,6 +17,7 @@ const MaintenanceTaskInputForm = ({AddMaintenaceData}) => {
             coach: coach.current.value,
             title: title.current.value,
             priority: priority.current.value,
+            department:department.current.value,
             description: description.current.value,
         };
         AddMaintenaceData(MaintenanceData)
@@ -90,6 +92,27 @@ const MaintenanceTaskInputForm = ({AddMaintenaceData}) => {
                                     <option>Medium</option>
                                     <option>High</option>
                                     <option>Critical</option>
+                                </select>
+                            </div>
+                            {/* DEPARTMENT */}
+                            <div>
+                                <label className="text-gray-700 font-medium">Department</label>
+                                <select
+                                    name="department"
+                                    ref={department}  // <-- create a useRef like priority
+                                    className="w-full mt-1 p-3 border rounded-lg bg-gray-50 
+                   focus:ring-2 focus:ring-blue-500"
+                                >
+                                    <option value="">Select Department</option>
+                                    <option>Mechanical</option>
+                                    <option>Electrical</option>
+                                    <option>Signal & Telecom</option>
+                                    <option>Carriage & Wagon</option>
+                                    <option>Traction</option>
+                                    <option>Operations</option>
+                                    <option>Engineering</option>
+                                    <option>Railway Safety</option>
+                                    <option>Maintenance</option>
                                 </select>
                             </div>
 

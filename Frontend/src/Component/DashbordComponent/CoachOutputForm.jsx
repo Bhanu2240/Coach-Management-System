@@ -1,19 +1,18 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
 
-const CoachOutputForm = ({AddCoach , CountCoachData}) => {
-
-
-    // console.log("Saved Coach Data:", AddCoach.length);
-    CountCoachData(AddCoach);
+const CoachOutputForm = ({ AddCoach, CountCoachData }) => {
+  // Count coach summary every render
+  CountCoachData(AddCoach);
 
   return (
- <div className=" bg-gray-100 p-8">
-
-     
+    <div className="bg-gray-100 p-8 min-h-screen">
 
       <div className="bg-white rounded-xl shadow-lg p-6">
 
-        <table className="w-full border-collapse rounded-lg overflow-hidden">
+        <h1 className="text-2xl font-bold mb-4 text-gray-800">Coaches List</h1>
+
+        <table className="w-full border-collapse rounded-lg overflow-hidden shadow-sm">
           <thead>
             <tr className="bg-blue-600 text-white text-left">
               <th className="p-4">Coach Number</th>
@@ -41,22 +40,34 @@ const CoachOutputForm = ({AddCoach , CountCoachData}) => {
                   key={index}
                   className="border-b hover:bg-gray-50 transition"
                 >
-                  <td className="p-4">{coach.coachNumber}</td>
+                  {/* CLICKABLE NUMBER */}
+                  <td className="p-4">
+                    <Link
+                      to={`/coach/${index}`}
+                      className="text-blue-600 font-semibold hover:underline"
+                    >
+                      {coach.coachNumber}
+                    </Link>
+                  </td>
+
                   <td className="p-4">{coach.type}</td>
                   <td className="p-4">{coach.depot}</td>
+
                   <td className="p-4">
                     <span
-                      className={`px-3 py-1 rounded-full text-sm text-white ${
-                        coach.status === "Active"
-                          ? "bg-green-500"
-                          : coach.status === "Under Maintenance"
-                          ? "bg-yellow-500"
-                          : "bg-red-500"
-                      }`}
+                      className={`px-3 py-1 rounded-full text-sm text-white 
+                        ${
+                          coach.status === "Active"
+                            ? "bg-green-500"
+                            : coach.status === "Under Maintenance"
+                            ? "bg-yellow-500"
+                            : "bg-red-500"
+                        }`}
                     >
                       {coach.status}
                     </span>
                   </td>
+
                   <td className="p-4">{coach.lastMaintenance}</td>
                   <td className="p-4">{coach.nextDue}</td>
                 </tr>
@@ -67,8 +78,7 @@ const CoachOutputForm = ({AddCoach , CountCoachData}) => {
       </div>
 
     </div>
-  
-  )
-}
+  );
+};
 
-export default CoachOutputForm
+export default CoachOutputForm;
