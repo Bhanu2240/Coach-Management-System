@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Raleway:400,700");
+/* 
 
 *, *:before, *:after {
   box-sizing: border-box;
@@ -35,7 +35,6 @@ body {
   transition-delay: 0.2s;
 }
 
-/* TOP + BOTTOM BASE */
 .top:before,
 .top:after,
 .bottom:before,
@@ -55,7 +54,7 @@ body {
   transition-delay: 0.2s;
 }
 
-/* TOP COLORS */
+
 .top:before {
   transform: rotate(45deg);
   background: #e46569;
@@ -65,7 +64,7 @@ body {
   background: #ecaf81;
 }
 
-/* BOTTOM COLORS */
+
 .bottom:before {
   transform: rotate(-45deg);
   background: #60b8d4;
@@ -75,7 +74,7 @@ body {
   background: #3745b5;
 }
 
-/* CENTER BOX */
+
 .center {
   position: absolute;
   width: 400px;
@@ -102,4 +101,31 @@ body {
   border-radius: 1px;
   border: 1px solid #ccc;
   font-family: inherit;
+} */
+
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Neon smooth hover */
+.neon-btn {
+  transition: all 0.3s ease-in-out;
+}
+
+.neon-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 140, 255, 0.4);
 }
