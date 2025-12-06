@@ -5,7 +5,7 @@ const NavBar = ({ isloggin, setIsloggin }) => {
     const location = useLocation();
 
     return (
-        <div className="w-full bg-gray-900 text-white shadow-lg sticky top-0 z-50">
+        <div className="w-full bg-gray-900 text-white shadow-lg sticky top-0 z-50 ">
             <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
                 {/* LOGO */}
