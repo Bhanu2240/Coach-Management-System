@@ -1,7 +1,8 @@
 
-// to import the Coach Schema from the models -> coach.js
+// To import the Coach Schema from the models -> coach.js
 const Coach = require('../model/coach')
 
+// create the function and export also
 exports.CoachData = async (req, res) => {
 
     try {
