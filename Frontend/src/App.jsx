@@ -13,12 +13,15 @@ import CoachDetailsPage from "./Pages/CoachDetailsPage"
 import DepartmentDashboard from "./Pages/DepartmentDashboard"
 // import ProtectedRoute from "./Pages/ProtectedRoute"
 
+
+
 function App() {
 
   //!_______________________________This is the Login_____________________________________
   const [isloggin, setIsloggin] = useState(false)
-
   const [authLoading, setAuthLoading] = useState(true);
+  // to store the role of the user
+  const [role , setRole] = useState();
   // CHECK LOGIN ON PAGE REFRESH
   // ! page reresh hone ke baad cookies ki help se check krta h ki use login h ki nhi cookis hoti h to aapne app login ho jata h refersh krne ke baad pr kisi ne logout kiya hoga to cookis remove ho gai hogi to vo bina login kiye dashboard p nhi jaa sakta h 
   useEffect(() => {
@@ -28,6 +31,8 @@ function App() {
           "http://localhost:4000/api/v1/me",
           { withCredentials: true }
         );
+        // to find the role of the user;
+        setRole(res.data.role);
 
         if (res.data.loggedIn) {
           setIsloggin(true);
@@ -42,7 +47,7 @@ function App() {
     };
 
     checkAuth();
-  }, []);
+  });
 
 
   //!________________________________This is the Coach Profile_________________________________
@@ -115,7 +120,11 @@ function App() {
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        const res = await fetch("http://localhost:4000/api/v1/alltaskdata");
+        const res = await fetch("http://localhost:4000/api/v1/alltaskdata",
+          {
+            credentials: "include", //  VERY IMPORTANT
+          }
+        );
         const data = await res.json();
 
         if (res.ok) {
@@ -137,7 +146,9 @@ function App() {
   // delete function for the Task
   function deleteTask(index) {
     // we can use the axios to delete the data from the database;
-    axios.delete(`http://localhost:4000/api/v1/deletetask/${index}`)
+    axios.delete(`http://localhost:4000/api/v1/deletetask/${index}`,
+      { withCredentials: true }
+    )
       .then(() => {
         // setAddMaintenace((pre) => pre.filter(task => task._id !== index));
         setAddMaintenace((pre) => pre.filter((v) => v._id !== index));
@@ -147,7 +158,7 @@ function App() {
   }
 
 
-  //!_______________________________________Coach updata____________________________________________
+  //!_______________________________________Coach update____________________________________________
   function UpdateCoachData(id, updatedData) {
     setAddCoach((prev) => {
       const newArr = [...prev];
@@ -161,12 +172,15 @@ function App() {
     return <div className="text-center mt-20 text-xl">Checking login...</div>;
   }
 
+
+
   return (
     <div>
-      <NavBar isloggin={isloggin} setIsloggin={setIsloggin} />
+      <NavBar isloggin={isloggin} setIsloggin={setIsloggin} role={role} />
+      
 
       <Routes>
-
+         
         {/* this is old route */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<Home TotalCoach={TotalCoach} ActiveCoach={ActiveCoach} MaintenanceDueCoach={MaintenanceDueCoach} OutOfSericeCoach={OutOfSericeCoach} />} />
@@ -175,8 +189,8 @@ function App() {
         <Route path="/singup" element={<Singup setIsloggin={setIsloggin} />} />
         <Route path="/coachprofile" element={<Dashbord AddCoachData={AddCoachData} AddCoach={AddCoach} CountCoachData={CountCoachData} />} />
         <Route path="/coach/:id" element={<CoachDetailsPage AddCoach={AddCoach} UpdateCoachData={UpdateCoachData} />} />
-        <Route path="/departments" element={<DepartmentDashboard AddMaintenance={AddMaintenace} countTask={countTask} completed={completed} />}
-        />
+        <Route path="/departments" element={<DepartmentDashboard AddMaintenance={AddMaintenace} countTask={countTask} completed={completed} />}/>
+
 
         {/* ⁡⁢⁣⁢this is the new Route use in future⁡ */}
         {/* <Route path="/" element={<LandingPage />} />

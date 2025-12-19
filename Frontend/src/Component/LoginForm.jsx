@@ -11,7 +11,7 @@ const LoginForm = ({ setIsloggin }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
-    email: "",
+    Railway_Id: "",
     password: "",
   });
 
@@ -76,14 +76,14 @@ const LoginForm = ({ setIsloggin }) => {
       {/* EMAIL FIELD */}
       <label className="flex flex-col gap-1">
         <p className="text-gray-700 font-semibold">
-          Email Address <sup className="text-red-500">*</sup>
+          Railway Id <sup className="text-red-500">*</sup>
         </p>
 
         <input
-          type="email"
-          name="email"
+          type="text"
+          name="Railway_Id"
           required
-          value={formData.email}
+          value={formData.Railway_Id}
           onChange={changeHandler}
           className="w-full px-4 py-3 border border-gray-300 bg-white/70 rounded-lg 
                      focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"

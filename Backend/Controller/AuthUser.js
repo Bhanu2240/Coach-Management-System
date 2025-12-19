@@ -16,7 +16,9 @@ require('dotenv').config();
 exports.singup = async (req, res) => {
     try {
         // get data;
-        const { first_name, last_name, email, password, role } = req.body;
+        const { first_name, last_name, email, password, role , Railway_Id } = req.body;
+        // const {userId} = req.body;
+        // console.log(userId);
 
         // to check user is already exist or not
         const userexist = await User.findOne({ email });
@@ -33,12 +35,13 @@ exports.singup = async (req, res) => {
         }
 
         //  create the user in the database [ using the function ( .create ) ]
-        const userCreate = await User.create({ first_name, last_name, email, password:hashpassword, role });
+        const userCreate = await User.create({ first_name, last_name, email, password:hashpassword, role ,Railway_Id});
+        console.log(userCreate)
         return res.status(200).json({ succ: true, user: userCreate, mess: 'user is created' });
         
     } catch (err) {
         console.log(err)
-        return res.status(500).json({ mess: err, suss: false });
+        return res.status(500).json({ mess: err, suss: false});
     }
 }
 
@@ -46,10 +49,10 @@ exports.singup = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         // get the data
-        const { email, password } = req.body;
+        const { Railway_Id, password } = req.body;
 
         // to check email is presnt or not in the database
-        const userEnter = await User.findOne({ email });
+        const userEnter = await User.findOne({ Railway_Id });
 
         if (!userEnter)
             return res.status(400).json({ succ: false, mess: "you are not loign pls login first" })
