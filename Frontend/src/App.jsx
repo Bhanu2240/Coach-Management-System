@@ -12,6 +12,7 @@ import LandingPage from "./Pages/LandingPage"
 import CoachDetailsPage from "./Pages/CoachDetailsPage"
 import DepartmentDashboard from "./Pages/DepartmentDashboard"
 // import ProtectedRoute from "./Pages/ProtectedRoute"
+import AdminPendingTasks from "./Pages/AdminPendingTasks"
 
 
 
@@ -190,6 +191,8 @@ function App() {
         <Route path="/coachprofile" element={<Dashbord AddCoachData={AddCoachData} AddCoach={AddCoach} CountCoachData={CountCoachData} />} />
         <Route path="/coach/:id" element={<CoachDetailsPage AddCoach={AddCoach} UpdateCoachData={UpdateCoachData} />} />
         <Route path="/departments" element={<DepartmentDashboard AddMaintenance={AddMaintenace} countTask={countTask} completed={completed} />}/>
+        <Route path="/admin/pending-tasks" element={<AdminPendingTasks />}
+/>
 
 
         {/* ⁡⁢⁣⁢this is the new Route use in future⁡ */}

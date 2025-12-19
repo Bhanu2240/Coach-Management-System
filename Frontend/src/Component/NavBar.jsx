@@ -80,12 +80,18 @@ const NavBar = ({ isloggin, setIsloggin, role }) => {
                     {/* Admin only */}
                     {isloggin && role === "admin" && (
                         <>
-                    <li>
-                            <Link to="/singup"className={getLinkClasses("/singup")} >
+                            <li>
+                                <Link to="/singup" className={getLinkClasses("/singup")} >
                                     New_User_Registure
-                            </Link>
-                    </li>
-                    </>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/admin/pending-tasks" className="text-white font-semibold">
+                                    Pending Tasks
+                                </Link>
+                            </li>
+                        </>
                     )}
                     {/* Note: The next two links were originally inside an extra 'isloggin' block, 
                            I'm keeping them exactly where they were in the original list item (li) structure. */}
