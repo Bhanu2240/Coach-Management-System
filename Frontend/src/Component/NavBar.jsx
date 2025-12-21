@@ -71,7 +71,7 @@ const NavBar = ({ isloggin, setIsloggin, role }) => {
                     <li>
                         {isloggin && (
                             <>
-                                <Link to="/" className={getLinkClasses("/")}>
+                                <Link to="/about" className={getLinkClasses("/about")}>
                                     About Us
                                 </Link>
                             </>
