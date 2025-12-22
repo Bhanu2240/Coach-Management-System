@@ -38,7 +38,20 @@ const TaskSchema = new Schema({
         ref: "User",
         required: true
     },
-    description: { type: String },
+    description: { 
+        type: String 
+    },
+    status: {
+      type: String,
+      enum: ["PENDING", "APPROVED", "REJECTED"],
+      default: "PENDING",
+    },
+
+    approvedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
 })
 
 // to create the model

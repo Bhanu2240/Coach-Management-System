@@ -11,7 +11,7 @@ const Template = ({ title, desc1, desc2, formtype, setIsloggin }) => {
         backgroundImage:
           "url('https://www.shutterstock.com/image-vector/vector-high-speed-electric-train-260nw-2321709117.jpg')",
       }}>
-      {/* ⭐ Soft Glass White Overlay */}
+      {/*  Soft Glass White Overlay */}
       <div className=" absolute inset-0 bg-white/35 backdrop-blur-sm"></div>
       {/* Outer Glass Card */}
       <div className="w-full max-w-md bg-white/90 backdrop-blur-xl shadow-2xl rounded-2xl px-8 py-10 animate-fadeIn">

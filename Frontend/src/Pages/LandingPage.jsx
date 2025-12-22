@@ -69,7 +69,7 @@ export default function LandingPage() {
 
             <div className="flex flex-wrap gap-3 mt-4">
               <a
-                href="/singup"
+                href="/login"
                 className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-lg shadow transition">
                 Get Started
                 <svg
