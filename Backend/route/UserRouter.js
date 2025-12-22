@@ -9,7 +9,7 @@ const {singup , login , logout} = require("../Controller/AuthUser");
 const {isadmin} = require('../middleware/AdminAuth');
 
 // to create the route
-router.post("/singup", singup);
+router.post("/singup" , isadmin, singup);
 router.post("/login" , login)
 router.post("/logout" , logout)
 

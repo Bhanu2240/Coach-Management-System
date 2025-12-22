@@ -40,7 +40,6 @@ app.use('/api/v1' , TaskRouter);
 app.use('/api/v1' , CoachRouter);
 
 
-
 // this is the default router
 app.get('/' , (req , res)=>{
     res.send('hello jiii kya haal chaal')

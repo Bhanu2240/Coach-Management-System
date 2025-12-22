@@ -11,9 +11,10 @@ import { useEffect, useState } from "react"
 import LandingPage from "./Pages/LandingPage"
 import CoachDetailsPage from "./Pages/CoachDetailsPage"
 import DepartmentDashboard from "./Pages/DepartmentDashboard"
-// import ProtectedRoute from "./Pages/ProtectedRoute"
+import ProtectedRoute from "./Pages/ProtectedRoute"
 import AdminPendingTasks from "./Pages/AdminPendingTasks"
 import AboutUs from "./Pages/AboutUs"
+import NotFound from "./Pages/NotFound"
 
 
 
@@ -23,7 +24,7 @@ function App() {
   const [isloggin, setIsloggin] = useState(false)
   const [authLoading, setAuthLoading] = useState(true);
   // to store the role of the user
-  const [role , setRole] = useState();
+  const [role, setRole] = useState();
   // CHECK LOGIN ON PAGE REFRESH
   // ! page reresh hone ke baad cookies ki help se check krta h ki use login h ki nhi cookis hoti h to aapne app login ho jata h refersh krne ke baad pr kisi ne logout kiya hoga to cookis remove ho gai hogi to vo bina login kiye dashboard p nhi jaa sakta h 
   useEffect(() => {
@@ -62,7 +63,11 @@ function App() {
   useEffect(() => {
     const fetchCoaches = async () => {
       try {
-        const res = await fetch("http://localhost:4000/api/v1/allcoach");
+        const res = await fetch("http://localhost:4000/api/v1/allcoach",
+          {
+            credentials: "include", //  VERY IMPORTANT
+          }
+        );
         const data = await res.json();
 
         if (res.ok) {
@@ -179,12 +184,12 @@ function App() {
   return (
     <div>
       <NavBar isloggin={isloggin} setIsloggin={setIsloggin} role={role} />
-      
+
 
       <Routes>
-         
+
         {/* this is old route */}
-        <Route path="/" element={<LandingPage />} />
+        {/* <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<Home TotalCoach={TotalCoach} ActiveCoach={ActiveCoach} MaintenanceDueCoach={MaintenanceDueCoach} OutOfSericeCoach={OutOfSericeCoach} />} />
         <Route path="/maintenance" element={<MaintenanceTask AddMaintenaceData={AddMaintenaceData} AddMaintenace={AddMaintenace} ContTask={ContTask} deleteTask={deleteTask} />} />
         <Route path="/login" element={<Login setIsloggin={setIsloggin} />} />
@@ -193,51 +198,35 @@ function App() {
         <Route path="/coach/:id" element={<CoachDetailsPage AddCoach={AddCoach} UpdateCoachData={UpdateCoachData} />} />
         <Route path="/departments" element={<DepartmentDashboard AddMaintenance={AddMaintenace} countTask={countTask} completed={completed} />}/>
         <Route path="/admin/pending-tasks" element={<AdminPendingTasks />}/>
-        <Route path="/about" element={<AboutUs/>}/>
+        <Route path="/about" element={<AboutUs/>}/> */}
 
 
         {/* ⁡⁢⁣⁢this is the new Route use in future⁡ */}
-        {/* <Route path="/" element={<LandingPage />} />
-        <Route
-          path="/home"
-          element={
-            <ProtectedRoute isloggin={isloggin}>
-              <Home
-                TotalCoach={TotalCoach}
-                ActiveCoach={ActiveCoach}
-                MaintenanceDueCoach={MaintenanceDueCoach}
-                OutOfSericeCoach={OutOfSericeCoach}
-              />
-            </ProtectedRoute>
-          }
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={
+          <ProtectedRoute isloggin={isloggin}>
+            <Home TotalCoach={TotalCoach} ActiveCoach={ActiveCoach} MaintenanceDueCoach={MaintenanceDueCoach} OutOfSericeCoach={OutOfSericeCoach} />
+          </ProtectedRoute>
+        }
         />
 
         <Route
           path="/maintenance"
           element={
             <ProtectedRoute isloggin={isloggin}>
-              <MaintenanceTask
-                AddMaintenaceData={AddMaintenaceData}
-                AddMaintenace={AddMaintenace}
-                ContTask={ContTask}
-                deleteTask={deleteTask}
-              />
+              <MaintenanceTask AddMaintenaceData={AddMaintenaceData} AddMaintenace={AddMaintenace} ContTask={ContTask} deleteTask={deleteTask} />
             </ProtectedRoute>
           }
         />
 
         <Route path="/login" element={<Login setIsloggin={setIsloggin} />} />
-        <Route path="/singup" element={<Singup setIsloggin={setIsloggin} />} />
+        
 
         <Route
           path="/coachprofile"
           element={
             <ProtectedRoute isloggin={isloggin}>
-              <Dashbord
-                AddCoachData={AddCoachData}
-                AddCoach={AddCoach}
-                CountCoachData={CountCoachData}
-              />
+              <Dashbord AddCoachData={AddCoachData} AddCoach={AddCoach} CountCoachData={CountCoachData} />
             </ProtectedRoute>
           }
         />
@@ -246,10 +235,7 @@ function App() {
           path="/coach/:id"
           element={
             <ProtectedRoute isloggin={isloggin}>
-              <CoachDetailsPage
-                AddCoach={AddCoach}
-                UpdateCoachData={UpdateCoachData}
-              />
+              <CoachDetailsPage AddCoach={AddCoach} UpdateCoachData={UpdateCoachData} />
             </ProtectedRoute>
           }
         />
@@ -258,14 +244,37 @@ function App() {
           path="/departments"
           element={
             <ProtectedRoute isloggin={isloggin}>
-              <DepartmentDashboard
-                AddMaintenance={AddMaintenace}
-                countTask={countTask}
-                completed={completed}
-              />
+              <DepartmentDashboard AddMaintenance={AddMaintenace} countTask={countTask} completed={completed} />
             </ProtectedRoute>
           }
-        /> */}
+        />
+
+        <Route
+          path="/admin/pending-tasks"
+          element={
+            <ProtectedRoute isloggin={isloggin}>
+              <AdminPendingTasks />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <ProtectedRoute isloggin={isloggin}>
+              <AboutUs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/singup"
+          element={
+            <ProtectedRoute isloggin={isloggin}>
+              <Singup setIsloggin={setIsloggin} />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="*" element={<NotFound/>}/>
       </Routes>
 
 
