@@ -15,6 +15,7 @@ import ProtectedRoute from "./Pages/ProtectedRoute"
 import AdminPendingTasks from "./Pages/AdminPendingTasks"
 import AboutUs from "./Pages/AboutUs"
 import NotFound from "./Pages/NotFound"
+import AdminUsers from "./Pages/AdminAllUser"
 
 
 
@@ -270,6 +271,14 @@ function App() {
           element={
             <ProtectedRoute isloggin={isloggin}>
               <Singup setIsloggin={setIsloggin} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/all_user"
+          element={
+            <ProtectedRoute isloggin={isloggin}>
+              <AdminUsers/>
             </ProtectedRoute>
           }
         />

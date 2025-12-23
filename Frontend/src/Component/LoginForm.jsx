@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
-import "./LoginForm.css";
+import "../AllCSS/LoginForm.css";
 
 const LoginForm = ({ setIsloggin }) => {
   const nva = useNavigate();
@@ -70,7 +70,7 @@ const LoginForm = ({ setIsloggin }) => {
 
   return (
     <form
-      className="w-full flex flex-col gap-5 animate-fadeIn h-94"
+      className="login-form w-full flex flex-col gap-5 animate-fadeIn h-94"
       onSubmit={submitHandler}
     >
       {/* EMAIL FIELD */}

@@ -107,7 +107,9 @@ exports.AllTask = async (req, res) => {
   try {
     const tasks = await Task.find({ status: "APPROVED" })
       .populate("selectCoach")
-      .populate("assignedBy");
+      .populate("assignedBy")
+      .populate("approvedBy");
+
 
     return res.status(200).json({
       success: true,
@@ -129,7 +131,8 @@ exports.PendingTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ status: "PENDING" })
       .populate("selectCoach")
-      .populate("assignedBy", "first_name email");
+      .populate("assignedBy", "first_name email")
+      
 
     return res.status(200).json({
       success: true,
@@ -155,10 +158,13 @@ exports.ApproveTask = async (req, res) => {
       id,
       {
         status: "APPROVED",
-        approvedBy: req.user.id, // admin id
+        approvedBy: req.user.id,
       },
       { new: true }
-    );
+    )
+      .populate("selectCoach", "name email")
+      .populate("assignedBy", "first_name email")
+      .populate("approvedBy", "first_name email");
 
     if (!task) {
       return res.status(404).json({
@@ -173,13 +179,13 @@ exports.ApproveTask = async (req, res) => {
       task,
     });
   } catch (err) {
-    console.log(err);
     return res.status(500).json({
       success: false,
       message: err.message,
     });
   }
 };
+
 
 /* ======================================
    ADMIN → REJECT TASK

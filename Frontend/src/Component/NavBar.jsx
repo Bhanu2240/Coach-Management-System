@@ -2,6 +2,17 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
+import { MdConnectWithoutContact } from "react-icons/md";
+import { GrVmMaintenance } from "react-icons/gr";
+import { HiUserAdd } from "react-icons/hi";
+import { MdOutlinePendingActions } from "react-icons/md";
+import { FaTrainSubway } from "react-icons/fa6";
+import { FcDepartment } from "react-icons/fc";
+import { TbManualGearboxFilled } from "react-icons/tb";
+import { HiUserGroup } from "react-icons/hi";
+
+import "../AllCSS/Nav.css";
 
 const NavBar = ({ isloggin, setIsloggin, role }) => {
     const location = useLocation();
@@ -45,70 +56,70 @@ const NavBar = ({ isloggin, setIsloggin, role }) => {
                     <svg className="w-8 h-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-11v2h2V9h-2zm0 4v2h2v-2h-2zM7 11v2h2v-2H7zm0 4v2h2v-2H7zm10-4v2h-2V9h2zm0 4v2h-2v-2h2z" />
                     </svg>
-                    <Link to="/" className="text-2xl font-extrabold tracking-wide hover:opacity-90 transition">
+                      
+                    <Link to="/home" className="text-2xl font-extrabold tracking-wide hover:opacity-90 transition">
                         RailCoach
                     </Link>
                 </div>
 
                 {/* CENTER NAVIGATION (ORDER STRICTLY PRESERVED, UI updated with clean active state) */}
-                <ul className="flex gap-8 items-center">
-                    <li>
-                        {isloggin && (
-                            <Link to="/home" className={getLinkClasses("/home")}>
-                                Home
-                            </Link>
-                        )}
-                    </li>
-
-                    <li>
-                        {isloggin && (
-                            <Link to="/maintenance" className={getLinkClasses("/maintenance")}>
-                                Maintenance Tasks
-                            </Link>
-                        )}
-                    </li>
-
-                    <li>
-                        {isloggin && (
-                            <>
-                                <Link to="/about" className={getLinkClasses("/about")}>
-                                    About Us
-                                </Link>
-                            </>
-                        )}
-                    </li>
-                    {/* Admin only */}
-                    {isloggin && role === "admin" && (
-                        <>
-                            <li>
-                                <Link to="/singup" className={getLinkClasses("/singup")} >
-                                    New_User_Registure
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    to="/admin/pending-tasks" className="text-white font-semibold">
-                                    Pending Tasks
-                                </Link>
-                            </li>
-                        </>
-                    )}
-                    {/* Note: The next two links were originally inside an extra 'isloggin' block, 
-                           I'm keeping them exactly where they were in the original list item (li) structure. */}
+                <ul className="nav-animated">
 
                     {isloggin && (
-                        <>
-                            <Link to="/coachprofile" className={getLinkClasses("/coachprofile")}>
-                                Coach Profile
-                            </Link>
-
-                            <Link to="/departments" className={getLinkClasses("/departments")}>
-                                departments Profile
-                            </Link>
-
-                        </>
+                        <li style={{ "--i": "#a855f7", "--j": "#ec4899" }}>
+                            <FaHome className="text-blue-500 w-7 h-7" />
+                            <Link to="/home">Home</Link>
+                        </li>
                     )}
 
+                    {isloggin && (
+                        <li style={{ "--i": "#38bdf8", "--j": "#2563eb" }}>
+                            <GrVmMaintenance className="text-blue-500 w-7 h-7"/>
+                            <Link to="/maintenance">Maintenance</Link>
+                        </li>
+                    )}
+
+                    {isloggin && (
+                        <li style={{ "--i": "#fb923c", "--j": "#ef4444" }}>
+                            <MdConnectWithoutContact className="text-blue-500 w-7 h-7"/>
+                            <Link to="/about">Contact</Link>
+                        </li>
+                    )}
+
+                    {isloggin && role === "admin" && (
+                        <li style={{ "--i": "#22c55e", "--j": "#14b8a6" }}>
+                            <HiUserAdd className="text-blue-500 w-7 h-7"/>
+                            <Link to="/singup">New User</Link>
+                        </li>
+                    )}
+
+                    {isloggin && role === "admin" && (
+                        <li style={{ "--i": "#facc15", "--j": "#f97316" }}>
+                            <MdOutlinePendingActions className="text-blue-500 w-7 h-7"/>
+                            <Link to="/admin/pending-tasks">Pending</Link>
+                        </li>
+                    )}
+
+                    {isloggin && role === "admin" && (
+                        <li style={{ "--i": "#C481A7", "--j": "#E85C90" }}>
+                            <HiUserGroup className="text-blue-500 w-7 h-7"/>
+                            <Link to="/all_user">All User</Link>
+                        </li>
+                    )}
+
+                    {isloggin && (
+                        <li style={{ "--i": "#0ea5e9", "--j": "#2563eb" }}>
+                            <FaTrainSubway className="text-blue-500 w-6 h-6"/>
+                            <Link to="/coachprofile">Coach</Link>
+                        </li>
+                    )}
+
+                    {isloggin && (
+                        <li style={{ "--i": "#f472b6", "--j": "#db2777" }}>
+                            <TbManualGearboxFilled className="text-blue-500 w-6 h-6"/>
+                            <Link to="/departments">Departments</Link>
+                        </li>
+                    )}
 
                 </ul>
 
@@ -129,8 +140,8 @@ const NavBar = ({ isloggin, setIsloggin, role }) => {
 
                     {/* LOGOUT Button (when logged in) */}
                     {isloggin && (
-                        <>
-                            <button
+                        < >
+                            <button 
                                 onClick={handleLogout}
                                 // UI CHANGE: Prominent red button style with icon
                                 className="px-5 py-2 rounded-md bg-red-600 font-semibold hover:bg-red-700 transition text-white shadow-md flex items-center gap-1">

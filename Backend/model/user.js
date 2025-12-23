@@ -39,7 +39,7 @@ const UserSchema = new Schema({
     Railway_Id:{
         type:String,
         require: true,
-    }
+    },
 })
 
 // create the model;

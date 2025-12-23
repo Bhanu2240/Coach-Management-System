@@ -34,6 +34,8 @@ const SignupForm = ({ setIsloggin }) => {
     Railway_Id: "",
   });
 
+  console.log(formdata)
+
   /* ===============================
      Handle Input Change
   ================================ */
