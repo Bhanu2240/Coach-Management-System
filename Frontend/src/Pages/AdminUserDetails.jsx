@@ -8,36 +8,51 @@ export default function AdminUserDetails() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [tasksCompleted, setTasksCompleted] = useState(null);
+  const [assignedApprovedCount, setAssignedApprovedCount] = useState(null);
+  const [assignedCompletedCount, setAssignedCompletedCount] = useState(null);
+  const [tasksApprovedByUser, setTasksApprovedByUser] = useState(null);
+  const [tasksCompletedByUser, setTasksCompletedByUser] = useState(null);
+  const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!id) return;
     setLoading(true);
 
-    // fetch user details
+    // fetch user details + populated tasks and completed count
     fetch(`http://localhost:4000/api/v1/admin/users/${id}`, {
       credentials: "include",
     })
       .then((r) => r.json())
       .then((data) => {
-        if (data.success && data.user) setUser(data.user);
-        else if (data.user) setUser(data.user);
+        console.log(data);
+        if (data.success) {
+          setUser(data.user || null);
+          setTasks(data.tasks || []);
+          setAssignedApprovedCount(
+            typeof data.assignedApprovedCount === "number"
+              ? data.assignedApprovedCount
+              : null
+          );
+          setAssignedCompletedCount(
+            typeof data.assignedCompletedCount === "number"
+              ? data.assignedCompletedCount
+              : null
+          );
+          setTasksApprovedByUser(
+            typeof data.tasksApprovedByUser === "number"
+              ? data.tasksApprovedByUser
+              : null
+          );
+          setTasksCompletedByUser(
+            typeof data.tasksCompletedByUser === "number"
+              ? data.tasksCompletedByUser
+              : null
+          );
+        }
       })
       .catch((e) => console.error("fetch user error", e))
       .finally(() => setLoading(false));
-
-    // fetch tasks completed (graceful fallback if endpoint doesn't exist)
-    fetch(`http://localhost:4000/api/v1/admin/users/${id}/tasks/count`, {
-      credentials: "include",
-    })
-      .then((r) => {
-        if (!r.ok) throw new Error("no tasks count endpoint");
-        return r.json();
-      })
-      .then((d) => {
-        if (d && typeof d.count !== "undefined") setTasksCompleted(d.count);
-      })
-      .catch(() => setTasksCompleted(null));
   }, [id]);
 
   function formatWorkTime(ms) {
@@ -73,6 +88,9 @@ export default function AdminUserDetails() {
             <p className="text-sm text-slate-300">{user.email}</p>
             <p className="mt-2 text-sm">
               <strong>Role:</strong> {user.role}
+            </p>
+            <p className="mt-2 text-sm">
+              <strong>Railway Id:</strong> {user.Railway_Id}
             </p>
           </div>
 
@@ -114,18 +132,109 @@ export default function AdminUserDetails() {
           </div>
 
           <div className="bg-white/3 rounded p-4">
-            <div className="mb-2 text-slate-300">Tasks Completed</div>
+            <div className="mb-2 text-slate-300">Tasks Created</div>
             <div className="font-medium">
-              {tasksCompleted === null ? "N/A" : tasksCompleted}
+              {assignedApprovedCount === null ? "N/A" : assignedApprovedCount}
+            </div>
+          </div>
+
+          <div className="bg-white/3 rounded p-4">
+            <div className="mb-2 text-slate-300">
+              Tasks Assigned - Completed
+            </div>
+            <div className="font-medium">
+              {assignedCompletedCount === null ? "N/A" : assignedCompletedCount}
+            </div>
+          </div>
+                    <div className="bg-white/3 rounded p-4">
+            <div className="mb-2 text-slate-300">
+              Stored: Tasks Completed (user)
+            </div>
+            <div className="font-medium">
+              {typeof user.tasksCompletedCount === "number"
+                ? user.tasksCompletedCount
+                : "N/A"}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-200">
+
+          {/* <div className="bg-white/3 rounded p-4">
+            <div className="mb-2 text-slate-300">
+              Stored: Tasks Approved (user)
+            </div>
+            <div className="font-medium">
+              {typeof user.tasksApprovedCount === "number"
+                ? user.tasksApprovedCount
+                : "N/A"}
+            </div>
+          </div> */}
+          {/* <div className="bg-white/3 rounded p-4">
+            <div className="mb-2 text-slate-300">
+              Stored: Assigned - Completed
+            </div>
+            <div className="font-medium">
+              {typeof user.tasksAssignedCompletedCount === "number"
+                ? user.tasksAssignedCompletedCount
+                : "N/A"}
+            </div>
+          </div> */}
+          <div className="bg-white/3 rounded p-4">
+            <div className="mb-2 text-slate-300">
+              Stored: Assigned - Approved
+            </div>
+            <div className="font-medium">
+              {typeof user.tasksAssignedApprovedCount === "number"
+                ? user.tasksAssignedApprovedCount
+                : "N/A"}
             </div>
           </div>
         </div>
 
         <div className="mt-6 text-slate-300">
-          <h3 className="text-sm font-semibold mb-2">Raw details</h3>
-          <pre className="text-xs bg-black/30 p-3 rounded overflow-auto">
-            {JSON.stringify(user, null, 2)}
-          </pre>
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold mb-2">Tasks</h3>
+            <div className="text-xs text-slate-400">
+              Approved By User:{" "}
+              {tasksApprovedByUser === null ? "N/A" : tasksApprovedByUser} •
+              Completed By User:{" "}
+              {tasksCompletedByUser === null ? "N/A" : tasksCompletedByUser}
+            </div>
+          </div>
+          {tasks.length === 0 ? (
+            <div className="text-sm text-slate-400">
+              No tasks found for this user.
+            </div>
+          ) : (
+            <div className="mt-2 space-y-2">
+              {tasks.map((t) => (
+                <div key={t._id} className="bg-white/3 p-3 rounded">
+                  <div className="flex items-center justify-between">
+                    <div className="font-semibold">{t.task}</div>
+                    <div className="text-xs px-2 py-1 rounded-full bg-slate-700/40">
+                      {t.status}
+                    </div>
+                  </div>
+                  <div className="text-xs text-slate-300 mt-1">
+                    Priority: {t.priority} • Department: {t.department}
+                  </div>
+                  <div className="text-xs text-slate-300 mt-1">
+                    Coach:{" "}
+                    {t.selectCoach
+                      ? `${t.selectCoach.coachNumber} (${t.selectCoach.type})`
+                      : "—"}
+                  </div>
+                  <div className="text-xs text-slate-300 mt-1">
+                    Approved By:{" "}
+                    {t.approvedBy
+                      ? `${t.approvedBy.first_name} ${t.approvedBy.last_name}`
+                      : "—"}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 
 const AdminPendingTasks = () => {
   const [pendingTasks, setPendingTasks] = useState([]);
@@ -44,7 +45,7 @@ const AdminPendingTasks = () => {
         setPendingTasks((prev) =>
           prev.filter((task) => task._id !== taskId)
         );
-        alert("Task Approved Successfully");
+        toast.success("Task Approved Successfully");
       }
     } catch (err) {
       console.error("Approve Error:", err);
@@ -66,7 +67,7 @@ const AdminPendingTasks = () => {
         setPendingTasks((prev) =>
           prev.filter((task) => task._id !== taskId)
         );
-        alert("Task Rejected");
+        toast.warning("Task Rejected");
       }
     } catch (err) {
       console.error("Reject Error:", err);
