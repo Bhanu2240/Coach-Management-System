@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
+
 import "../AllCSS/LoginForm.css";
 
 const LoginForm = ({ setIsloggin }) => {
@@ -40,6 +41,7 @@ const LoginForm = ({ setIsloggin }) => {
       });
 
       const data = await res.json();
+      // console.log(data);
 
       if (!res.ok) {
         // show error to user
@@ -48,15 +50,17 @@ const LoginForm = ({ setIsloggin }) => {
       }
 
       // this is the inbuld the function to store the value in local
-      if (data.userobj && data.userobj._id) {
+if (data.userobj && data.userobj._id) {
         localStorage.setItem("userId", data.userobj._id);
       }
       // console.log(data.userobj._id);
 
       // You can also use data.user if backend returned user object
+      
       setIsloggin(true);
-
       nva("/home");
+
+    
 
     } catch (err) {
       console.log("Login error:", err);
@@ -68,11 +72,13 @@ const LoginForm = ({ setIsloggin }) => {
     nva(-1);
   }
 
+
   return (
     <form
       className="login-form w-full flex flex-col gap-5 animate-fadeIn h-94"
       onSubmit={submitHandler}
     >
+     
       {/* EMAIL FIELD */}
       <label className="flex flex-col gap-1">
         <p className="text-gray-700 font-semibold">
@@ -126,6 +132,7 @@ const LoginForm = ({ setIsloggin }) => {
                    font-semibold shadow-md transition"
       >
         Log In
+        
       </button>
 
       {/* Back BUTTON */}

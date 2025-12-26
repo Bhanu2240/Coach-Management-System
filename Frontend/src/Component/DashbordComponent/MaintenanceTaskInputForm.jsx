@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import AnimatedMenuButton from "../../Button/AnimatedMenuButton";
+import { toast } from 'react-toastify';
 
 const MaintenanceTaskInputForm = ({ coachList, setCoachList }) => {
   const [showForm, setShowForm] = useState(false);
@@ -49,7 +50,8 @@ const MaintenanceTaskInputForm = ({ coachList, setCoachList }) => {
 
     const userId = localStorage.getItem("userId");
     if (!userId) {
-      alert("User not logged in");
+      // alert("User not logged in");
+      toast.error("User not logged in");
       return;
     }
 
@@ -74,11 +76,11 @@ const MaintenanceTaskInputForm = ({ coachList, setCoachList }) => {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.message || "Task not created");
+        toast.error(data.message || "Task not created");
         return;
       }
 
-      alert("Task sent to Admin for approval");
+      toast.info("Task sent to Admin for approval");
       setShowForm(false);
     } catch (err) {
       console.error("Task Error:", err);

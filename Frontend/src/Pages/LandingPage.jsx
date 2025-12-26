@@ -1,6 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 
 const statsInit = [
   { id: 1, label: "Coaches Managed", value: 124 },
@@ -31,6 +32,14 @@ export default function LandingPage() {
 
     return () => timers.forEach((t) => cancelAnimationFrame(t));
   }, []);
+
+    //     useEffect(() => {
+    //   toast.success("You are logged out", {
+    //     position: "top-right",
+    //     autoClose: 2000,
+    //     theme: "dark",
+    //   });
+    // }, []);
 
   return (
     <div

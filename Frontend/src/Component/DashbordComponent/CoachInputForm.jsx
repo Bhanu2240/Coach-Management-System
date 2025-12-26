@@ -1,6 +1,7 @@
 /** @format */
 
 import React, { useRef, useState } from "react";
+import { toast } from 'react-toastify';
 
 const CoachInputForm = ({ AddCoachData }) => {
   const [showForm, setShowForm] = useState(false);
@@ -37,7 +38,7 @@ const CoachInputForm = ({ AddCoachData }) => {
       // console.log(data.CoachCreate);
 
       if (!res.ok) {
-        alert(data.message || "Coach is not created");
+        toast.error(data.message || "Coach is not created");
         return;
       }
 
@@ -46,7 +47,7 @@ const CoachInputForm = ({ AddCoachData }) => {
       setShowForm(false);
       AddCoachData(coachData);
 
-      alert("Coach is created");
+      toast.success("Coach is created");
     } catch (err) {
       console.error("Coach Error:", err);
     }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { toast } from 'react-toastify';
 
 /* ===============================
    Browser-safe Railway ID Generator
@@ -19,22 +20,37 @@ async function generateUserId(name, email) {
 }
 
 const SignupForm = ({ setIsloggin }) => {
-  const nav = useNavigate();
+  // const nav = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConPassword, setShowConPassword] = useState(false);
 
-  const [formdata, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    role: "",
-    Railway_Id: "",
-  });
 
-  console.log(formdata)
+  const initialFormState = {
+  first_name: "",
+  last_name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  role: "",
+  Railway_Id: "",
+};
+
+//! --> pehle eese tha
+  // const [formdata, setFormData] = useState({
+  //   first_name: "",
+  //   last_name: "",
+  //   email: "",
+  //   password: "",
+  //   confirmPassword: "",
+  //   role: "",
+  //   Railway_Id: "",
+  // });
+
+//todo --> aab eesa kr diya kyu ki isse hum data ko clean kr sakte h;
+  const [formdata, setFormData] = useState(initialFormState)
+
+  // console.log(formdata)
 
   /* ===============================
      Handle Input Change
@@ -73,12 +89,12 @@ const SignupForm = ({ setIsloggin }) => {
     e.preventDefault();
 
     if (formdata.password !== formdata.confirmPassword) {
-      alert("Passwords do not match");
+      toast.warning("Passwords do not match");
       return;
     }
 
     if (!formdata.Railway_Id) {
-      alert("Please generate Railway ID");
+      toast.warning("Please generate Railway ID");
       return;
     }
 
@@ -93,13 +109,15 @@ const SignupForm = ({ setIsloggin }) => {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.message || "Signup failed");
+        toast.error(data.message || "Signup failed");
         return;
       }
 
-      alert("Account created successfully!");
+      toast.success("Account created successfully!");
+      // ✅ CLEAR ALL FIELDS
+setFormData(initialFormState);
       setIsloggin(true);
-      nav("/home");
+      // nav("/singup");
     } catch (err) {
       console.error("Signup Error:", err);
     }
